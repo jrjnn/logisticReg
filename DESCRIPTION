@@ -1,0 +1,16 @@
+Package: logisticReg
+Title: Logistic Regression Implementation
+Description: An educational implementation of logistic regression using Iteratively Reweighted Least Squares (IRLS).
+Version: 0.1.0
+Authors@R: person("Rong", "Ji", email = "rongji.789@gmail.com", role = c("aut", "cre"))
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    bench
+VignetteBuilder: knitr, rmarkdown
+RoxygenNote: 7.3.2
+Config/testthat/edition: 3

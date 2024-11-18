@@ -1,0 +1,81 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+The `logisticReg` package provides a custom implementation of logistic regression using Iteratively Reweighted Least Squares (IRLS). In this vignette, we will demonstrate how to use the `logistic_reg` function and compare it to the `glm` function from base R to validate the correctness and efficiency.
+
+## Example Usage
+
+First, let's simulate some data to fit a logistic regression model.
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(logisticReg)
+```
+
+```{r}
+set.seed(123)
+X <- cbind(1, matrix(rnorm(100), ncol = 2))
+y <- rbinom(50, 1, prob = 0.5)
+```
+
+Fitting Logistic Regression with logistic_reg We will fit a logistic regression model using the logistic_reg function.
+```{r}
+library(logisticReg)
+logistic_result <- logistic_reg(X, y)
+print(logistic_result$coefficients)
+
+```
+
+## Comparison with glm
+Now, let's fit the same model using the glm function and compare the coefficients with logistic_reg.
+```{r}
+glm_result <- coef(glm(y ~ X[, -1], family = binomial))
+print(glm_result)
+```
+
+## Correctness Comparison
+
+We use `all.equal()` to verify if the coefficients estimated by `logistic_reg` match those of `glm`. To account for possible numerical differences in the algorithms, we include a tolerance level.
+
+```{r compare-results}
+correctness_check <- all.equal(
+  round(logistic_result$coefficients, 4), 
+  round(glm_result, 4),
+  tolerance = 1e-4
+)
+print(correctness_check)
+```
+The output should indicate that the coefficients from logistic_reg are very close to those from glm, indicating that the implementation is correct.
+
+## Efficiency Comparison
+We will use the bench::mark package to compare the performance of logistic_reg and glm. This will help us understand the efficiency of our implementation compared to the standard glm function.
+```{r}
+library(bench)
+
+benchmark_result <- bench::mark(
+  logistic_reg = logistic_reg(X, y)$coefficients,
+  glm = coef(glm(y ~ X[, -1], family = binomial)),
+  iterations = 100
+)
+print(benchmark_result)
+```
+## Conclusion
+In this vignette, we demonstrated how to use the logistic_reg function from the logisticReg package and compared it to the standard glm function. The results showed that:
+
+### Correctness: The coefficients estimated by logistic_reg are very similar to those from glm, indicating that the implementation is correct.
+
+### Efficiency: We also benchmarked the functions to assess their efficiency, which provides insight into the performance of our implementation compared to the standard glm function.
