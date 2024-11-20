@@ -44,6 +44,10 @@ jobs:
           name: R-CMD-check-results
           path: '*Rcheck/'
 
+      - name: Install testing package
+        run: |
+          R -e "install.packages('devtools')"
+
       - name: Run unit tests
         run: |
           R -e "devtools::test()"
