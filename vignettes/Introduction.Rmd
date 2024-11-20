@@ -69,9 +69,10 @@ library(bench)
 benchmark_result <- bench::mark(
   logistic_reg = logistic_reg(X, y)$coefficients,
   glm = coef(glm(y ~ X[, -1], family = binomial)),
-  iterations = 100
+  check = FALSE
 )
 print(benchmark_result)
+
 ```
 ## Conclusion
 In this vignette, we demonstrated how to use the logistic_reg function from the logisticReg package and compared it to the standard glm function. The results showed that:

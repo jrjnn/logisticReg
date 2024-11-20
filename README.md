@@ -33,16 +33,7 @@ result <- logistic_reg(X, y)
 print(result)
 #> $coefficients
 #> (Intercept)    X[, -1]1    X[, -1]2 
-#> -0.01498098  0.38449206  0.01635202 
-#> 
-#> $standard_errors
-#> [1] 0.2909321 0.3209556 0.3187836
-#> 
-#> $iter
-#> [1] 4
-#> 
-#> $converged
-#> [1] TRUE
+#> -0.01498095  0.38449166  0.01635199
 ```
 
 Comparison with glm:

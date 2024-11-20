@@ -3,7 +3,7 @@ Title: Logistic Regression Implementation
 Description: An educational implementation of logistic regression using Iteratively Reweighted Least Squares (IRLS).
 Version: 0.1.0
 Authors@R: person("Rong", "Ji", email = "rongji.789@gmail.com", role = c("aut", "cre"))
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 

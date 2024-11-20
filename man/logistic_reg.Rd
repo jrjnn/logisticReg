@@ -4,12 +4,16 @@
 \alias{logistic_reg}
 \title{Logistic Regression}
 \usage{
-logistic_reg(X, y)
+logistic_reg(X, y, tol = 1e-06, max_iter = 100)
 }
 \arguments{
 \item{X}{A matrix of predictors, including the intercept column.}
 
 \item{y}{A binary response vector (0/1).}
+
+\item{tol}{Tolerance level for convergence.}
+
+\item{max_iter}{Maximum number of iterations for the algorithm.}
 }
 \value{
 A list containing:
