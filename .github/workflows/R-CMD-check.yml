@@ -24,7 +24,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev pandoc
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev pandoc
 
       - name: Install R dependencies
         run: |
@@ -37,16 +37,16 @@ jobs:
           R CMD build .
           R CMD check *tar.gz --no-manual --as-cran
 
-      - name: Run unit tests
-        run: |
-          R -e "devtools::test()"
-
       - name: Upload R CMD check results
         if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: R-CMD-check-results
           path: '*Rcheck/'
+
+      - name: Run unit tests
+        run: |
+          R -e "devtools::test()"
 
       - name: Run code coverage analysis
         run: |
