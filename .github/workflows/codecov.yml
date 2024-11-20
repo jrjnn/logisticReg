@@ -2,37 +2,43 @@ name: Code Coverage Analysis
 
 on:
   push:
-    branches: [main, master]
+    branches:
+      - master
   pull_request:
-    branches: [main, master]
+    branches:
+      - master
 
 jobs:
-  test-coverage:
+  coverage:
+    name: Generate Coverage Report
     runs-on: ubuntu-latest
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up R environment
         uses: r-lib/actions/setup-r@v2
         with:
-          use-public-rspm: true
+          r-version: '4.2.1'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev pandoc
 
       - name: Install R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::covr
-
-      - name: Run Test Coverage
         run: |
-          R -e 'covr::codecov(comment = FALSE)'
-        shell: Rscript {0}
+          R -e "install.packages('remotes')"
+          R -e "remotes::install_deps(dependencies = TRUE)"
+          R -e "install.packages('covr')"
 
-      - name: Upload Coverage to Codecov
+      - name: Run unit tests and generate coverage report
+        run: |
+          R -e "covr::package_coverage(type = 'all')"
+          R -e "covr::codecov()"
+
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
