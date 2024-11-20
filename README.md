@@ -4,6 +4,8 @@
 # logisticReg
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/jrjnn/logisticReg/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/jrjnn/logisticReg/actions/workflows/R-CMD-check.yml)
 <!-- badges: end -->
 
 The `logisticReg` package provides a custom implementation of logistic
