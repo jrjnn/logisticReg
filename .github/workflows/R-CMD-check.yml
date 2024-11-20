@@ -43,10 +43,15 @@ jobs:
           name: R-CMD-check-results
           path: '*Rcheck/'
 
-      - name: Run Codecov for code coverage
+      - name: Run code coverage analysis
+        run: |
+          R -e "install.packages('covr')"
+          R -e "covr::codecov()"
+
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: 'logisticReg.Rcheck/logisticReg-coverage.json'
+          files: 'coverage.json'
           flags: unittests
           name: code-coverage-report
